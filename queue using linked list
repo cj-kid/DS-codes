@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+
+struct node{
+struct node* next;
+int data;
+};
+
+void push(struct node** head , int new_data){
+struct node* new_one = new node;
+new_one->data = new_data;
+new_one->next = NULL;
+if((*head) == NULL){
+    (*head) = new_one;
+    return;
+}
+while((*head)->next != NULL )
+(*head) = (*head)->next;
+
+(*head)->next = new_one;
+}
+void pop(struct node** head){
+    if((*head) == NULL){
+        cout<<"Underflow"<<endl;
+        return;
+    }
+ node* temp = (*head);
+ (*head) = (*head)->next;
+ delete temp;
+}
+int in_front(struct node** head){
+if((*head) == NULL){
+    return -1;
+}
+return (*head)->data;
+}
+
+void print_functions(){
+cout<<"Press [1] for inserting an element"<<endl<<"Press [2] for removing an Element"<<endl;
+cout<<"Press [3] to look at the element at front"<<endl<<"Press [-1] to terminate the program"<<endl;
+return;
+}
+
+int main(){
+    cout<<"Queue is here!"<<endl;
+    struct node* head = NULL;
+    int i = 99;
+    print_functions();
+    cin>>i;
+    while(i!= -1){
+        if(i == 1){
+            cout<<"Enter the value to be added"<<endl;
+            cin>>i;
+            push(&head,i);
+        }else if(i==2 ){
+        pop(&head);
+        }else if(i==3){
+        cout<<"Element at front is : "<<in_front(&head)<<endl;
+        }else{
+        cout<<"Invalid Input"<<endl;
+        }
+        cout<<"Issue a New command"<<endl;
+        cin>>i;
+    }
+    cout<<"Program Terminated"<<endl;
+    return 0;
+}
