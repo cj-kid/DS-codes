@@ -1,0 +1,87 @@
+#include <bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define ll long long
+#define ld long double // max size
+#define u unsigned
+#define loop(i,a,b) for(int i=a;i<b;i++)
+#define loop_negative(i,a,b) for(int i=a;i>=b;i--)
+#define loop_simple(i,n) loop(i,0,n)
+#define pb push_back
+#define mod 1000000007
+
+using namespace std;
+
+typedef pair<int,int>   PI;
+typedef vector<int> VI;
+typedef pair<vector<int>,vector<int>> VIP;
+
+int binary(int high ,int arr[] , int item , int low = 0 ){
+    if(high >= low){
+int mid = (high-low)/2 + low;
+if(arr[mid] == item )
+    return mid;
+if(arr[mid] > item)
+  return  binary(item,arr,mid-1,low);
+else
+ return binary(item,arr,high,mid+1);
+    }
+ return -1;
+}
+
+void linear(int n, int arr[], int item){
+loop_simple(i,n){
+if(arr[i] == item){
+cout<<"Hey I found it "<<item<<" was on index "<<i<<" [0-base indexing]"<<endl;
+return;
+}
+}
+cout<<"Sorry I don't think this element "<<item<<" is in the array"<<endl;
+return;
+}
+
+int main() {
+    char ch2 = 'a';
+    while(ch2 != 'X' && ch2 != 'x'){
+cout<<"Hey there! \n So you wanna have a Linear search [Press L] or a Binary Search [Press B] ? "<<endl;
+cin>>ch2;
+if(ch2 == 'B' || ch2 == 'b'){
+    cout<<"So for a Binary Search what Size of array do you want ? [Enter the Integer Size] "<<endl;
+    int n;
+    cin>>n;
+    cout<<"Now just enter the Sorted Array"<<endl;
+    int arr[n];
+    loop_simple(i,n)
+    cin>>arr[i];
+    cout<<"So which element do you wanna find in this array ? [Enter the element to search]"<<endl;
+    int item;
+    cin>>item;
+    if(arr[n-1] < item || arr[0] > item){
+    cout<<"Sorry I don't think this element "<<item<<" is in the array"<<endl;
+    }else{
+     int mid = binary(n-1,arr,item);
+     if(mid == -1){
+        cout<<"Sorry I don't think this element "<<item<<" is in the array"<<endl;
+     }else{
+         cout<<"Hey I found it "<<item<<" was on index "<<mid<<" [0-base indexing]"<<endl;
+     }
+    }
+}else if(ch2 == 'l' || ch2 == 'L'){
+    cout<<"So for a Linear Search what Size of array do you want ? [Enter the Integer Size] "<<endl;
+    int n;
+    cin>>n;
+    cout<<"Now just enter the Array"<<endl;
+    int arr[n];
+    loop_simple(i,n)
+    cin>>arr[i];
+    cout<<"So which element do you wanna find in this array ? [Enter the element to search]"<<endl;
+    int item;
+    cin>>item;
+    linear(n,arr,item);
+}else{
+cout<<"Hey you entered invalid input there"<<endl;
+}
+cout<<"wanna Exit the Program ? [Press X else program repeats]"<<endl;
+cin>>ch2;
+    }
+	return 0;
+}
