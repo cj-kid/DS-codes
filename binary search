@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+int index(int item ,int arr[] , int high , int low = 0 ){
+    if(high >= low){
+int mid = (high-low)/2 + low;
+if(arr[mid] == item )
+    return mid;
+if(arr[mid] > item)
+  return  index(item,arr,mid-1,low);
+else
+ return index(item,arr,high,mid+1);
+    }
+ return -1;
+}
+int main()
+{
+    cout<<"enter size"<<endl;
+    int n;
+    cin>>n;
+    cout<<"enter sorted array"<<endl;
+    int arr[n];
+    for(int i = 0;i<n;i++)
+        cin>>arr[i];
+    cout<<"enter item to be found"<<endl;
+    int item;
+    cin>>item;
+    cout<<"result of search is"<<endl;
+     cout<<index(item,arr,n)<<endl;
+    return 0;
+}
