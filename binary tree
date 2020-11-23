@@ -1,0 +1,101 @@
+#include "bits/stdc++.h"
+#include "conio.h"
+using namespace std;
+
+typedef struct node{
+int data;
+node* left_child ;
+node* right_child;
+} node ;
+
+node* tree_builder(int new_data , node* root){
+    node* temp = new node();
+    temp->data = new_data;
+    temp->left_child = NULL;
+    temp->right_child = NULL;
+if(root == NULL){
+    root = temp;
+    return root;
+}
+if(root->data > new_data){
+  root->left_child = tree_builder(new_data,root->left_child);
+}else{
+  root->right_child = tree_builder(new_data,root->right_child);
+}
+return root;
+}
+
+void final_printer(node* root){
+if(root == NULL)
+    return;
+cout<<"root->data = "<<root->data<<" ";
+if(root->left_child != NULL){
+    cout<<"root->left_child = "<<root->left_child->data<<" ";
+}
+if(root->right_child != NULL){
+    cout<<"root->right_child = "<<root->right_child->data<<" ";
+}
+cout<<endl;
+if(root->left_child != NULL){
+   final_printer(root->left_child);
+}
+if(root->right_child != NULL){
+    final_printer(root->right_child);
+}
+}
+
+void print_inorder(node* root){
+        if(root == NULL)
+        return;
+if(root->left_child != NULL)
+    print_inorder(root->left_child);
+cout<<root->data<<" ";
+if(root->right_child != NULL)
+    print_inorder(root->right_child);
+return;
+}
+void print_preorder(node* root){
+        if(root == NULL)
+        return;
+cout<<root->data<<" ";
+if(root->left_child != NULL)
+    print_preorder(root->left_child);
+if(root->right_child != NULL)
+    print_preorder(root->right_child);
+return;
+}
+void print_postorder(node* root){
+    if(root == NULL)
+        return;
+if(root->left_child != NULL)
+    print_postorder(root->left_child);
+if(root->right_child != NULL)
+    print_postorder(root->right_child);
+cout<<root->data<<" ";
+return;
+}
+int main()
+{
+    node* root = NULL;
+    int n;
+    cout<<"Enter the total size of tree"<<endl;
+    cin>>n;
+    cout<<"The Tree of Size "<<n<<" has following elements"<<endl;
+    while(n-->0){
+        int val = rand()%50;
+        cout<<val<<" ";
+        root = tree_builder(val,root);
+    }
+
+if(root == NULL){
+    cout<<"Fail"<<endl;
+    return 0;
+}
+cout<<endl<<"In-order Traversal"<<endl;
+print_inorder(root);
+cout<<endl<<"Pre-order Traversal"<<endl;
+print_preorder(root);
+cout<<endl<<"Post-order Traversal"<<endl;
+print_postorder(root);
+    return 0;
+}
