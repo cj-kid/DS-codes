@@ -1,0 +1,170 @@
+#include <iostream>
+#include<conio.h>
+using namespace std;
+
+void display_s(int arr[] , int n){
+cout<<"So, your Current Data Structure is : ";
+if(n == 0 ){
+    cout<<"Empty"<<endl; return;
+}
+for(int i = n-1 ; i>=0 ;i--)
+cout<<arr[i]<<" ";
+cout<<endl;
+return;
+}
+void display_q(int arr[] , int n){
+cout<<"So, your Current Data Structure is : ";
+if(n == 0 ){
+    cout<<"Empty"<<endl; return;
+}
+for(int i = 0 ; i< n ;i++)
+cout<<arr[i]<<" ";
+cout<<endl;
+return;
+}
+int adder(int val , int arr[] , int n ,  int max_){
+if(n >= max_){
+  cout<<"Bro, your Data Structure is full no more space for new elements, try deleting some"<<endl;
+return n;
+}
+arr[n] = val;
+n++;
+//display(arr,n);
+return n;
+}
+int deleter_s(int n, int arr[]){
+if(n <= 0){
+    cout<<"Pal, the Stack is empty, Nothing here to delete, Try adding some elements first"<<endl;
+    return 0;
+}
+n = n-1;
+//display(arr,n);
+return n;
+}
+int deleter_q(int n, int arr[]){
+if(n <= 0){
+    cout<<"Pal, the Stack is empty, Nothing here to delete, Try adding some elements first"<<endl;
+    return 0;
+}
+for(int i = 0;i < n-1 ; i++)
+    arr[i] = arr[i+1];
+n = n-1;
+//display(arr,n);
+return n;
+}
+void stack_array(){
+cout<<"So, you wanna use a Stack Today ? "<<endl;
+    _getch();
+    cout<<"follow me "<<endl;
+    cout<<endl<<"So, initially how many elements(Maximum) do you want in your Stack ?"<<endl;
+    int n;
+    cin>>n;
+    int arr[n];
+    cout<<"Great Choice! \n So, how many elements do you wanna input now ? "<<endl;
+    int temp;
+    cin>>temp;
+    cout<<"k "<<endl;
+    _getch();
+    cout<<"So, the elements you wanna input are ? "<<endl;
+    for(int i = 0 ;i <temp; i++)
+    cin>>arr[i];
+    display_s(arr,temp);
+    char ch = 'a';
+    while(ch != 'x' && ch != 'X'){
+    cout<<"So, what do you wanna do ?"<<endl;
+   // _getch();
+    cout<<" Wanna Insert an Element [Press I] or Pop an Element [Press P] or Display an Element [Press D] ?"<<endl;
+        cin>>ch;
+        if(ch == 'i' || ch == 'I'){
+            cout<<"Let's insert that Element! "<<endl;
+                _getch();
+            cout<<"By the way what's that element ?"<<endl;
+            int val;
+            cin>>val;
+            temp = adder(val,arr,temp,n);
+            display_s(arr,temp);
+        }else if(ch == 'p' || ch == 'P'){
+        cout<<" \n Let's Pop an Element! "<<endl;
+        temp = deleter_s(temp,arr) ;
+        display_s(arr,temp);
+        }else if(ch =='D' || ch == 'd'){
+            display_s(arr,temp);
+        }else{
+        cout<<"Pal, what are you even trying to Input Here ? "<<endl;
+        }
+        _getch();
+        cout<<"So, now That's that, Wanna do it again [Press any key] ? or wanna Exit ? [Press X] "<<endl;
+        cin>>ch;
+    }
+    return;
+}
+void queue_array(){
+cout<<"So, you wanna use a Queue Today ? "<<endl;
+    _getch();
+    cout<<"follow me "<<endl;
+    cout<<endl<<"So, initially how many elements(Maximum) do you want in your Queue ?"<<endl;
+    int n;
+    cin>>n;
+    int arr[n];
+    cout<<"Great Choice! \n So, how many elements do you wanna input now ? "<<endl;
+    int temp;
+    cin>>temp;
+    cout<<"k "<<endl;
+    _getch();
+    cout<<"So, the elements you wanna input are ? "<<endl;
+    for(int i = 0 ;i <temp; i++)
+    cin>>arr[i];
+    display_q(arr,temp);
+    char ch = 'a';
+    while(ch != 'x' && ch != 'X'){
+    cout<<"So, what do you wanna do ?"<<endl;
+    //_getch();
+    cout<<" Wanna Insert an Element [Press I] or Pop an Element [Press P] or Display an Element [Press D] ?"<<endl;
+        cin>>ch;
+        if(ch == 'i' || ch == 'I'){
+            cout<<"Let's insert that Element! "<<endl;
+                _getch();
+            cout<<"By the way what's that element ?"<<endl;
+            int val;
+            cin>>val;
+            temp = adder(val,arr,temp,n);
+            display_q(arr,temp);
+        }else if(ch == 'p' || ch == 'P'){
+        cout<<" \n Let's Pop an Element! "<<endl;
+       // temp = deleter(temp,arr) ;
+       temp = deleter_q(temp,arr);
+       display_q(arr,temp);
+        }else if(ch =='D' || ch == 'd'){
+            display_q(arr,temp);
+        }else{
+        cout<<"Pal, what are you even trying to Input Here ? "<<endl;
+        }
+        _getch();
+        cout<<"So, now That's that, Wanna do it again[Press any key]? or wanna Exit ? [Press X] "<<endl;
+        cin>>ch;
+    }
+    return;
+}
+
+int main(){
+    cout<<"Hi there!"<<endl<<" I heard you wanna try Stack and Queue today ?"<<endl;
+    //cout<<"[Press S for Stack] [Press Q for Queue] [Press X to Exit]"<<endl;
+    char ch = 'a';
+    while(ch != 'x' && ch != 'X'){
+    cin>>ch;
+    if(ch == 's' || ch == 'S'){
+    stack_array();
+    }else if(ch == 'q' || ch == 'Q'){
+        queue_array();
+    }else{
+        cout<<"Pal, what are you even trying to Input Here ? "<<endl;
+    }
+    _getch();
+        cout<<"So, now That's that, Wanna do it again [Press any key] ? or wanna Exit ? [Press X] "<<endl;
+        cout<<"[Press S for Stack] [Press Q for Queue] [Press X to Exit]"<<endl;
+        cin>>ch;
+          }
+    cout<<"This was made by Chander Jindal"<<endl;
+    // make qeue next
+    return 0;
+}
