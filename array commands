@@ -1,0 +1,69 @@
+#include <iostream>
+#define loop(i,a,b) for(int i = a ; i < b ; i++)
+#define loop_simple(i,n) loop(i,0,n)
+#define loop_negative(i,a,b) for(int i = b ; i >= a ; i--)
+using namespace std;
+int arr[25];
+void printer(int n){
+loop_simple(i,n)
+cout<<arr[i]<<" ";
+cout<<endl;
+}
+void inserter(int n, int index , int val){
+loop_negative(i,index+1,n)
+arr[i] = arr[i-1];
+arr[index] = val;
+    cout<<"The resultant Array is: "; printer(n);
+}
+void deleter(int n, int index ){
+loop(i,index,n)
+arr[index] = arr[index+1];
+cout<<"The resultant Array is: "; printer(n-1);
+}
+void triverser(int val ,int n){
+loop_simple(i,n)
+arr[i] *= val;
+cout<<"The resultant Array is: "; printer(n);
+}
+
+int main(){
+    cout<<" Print the number of elements you want in the array (less than 20)"<<endl;
+    int n,temp;
+    cin>>n;
+    cout<<"Enter the elements of the array"<<endl;
+    loop_simple(i,n){
+    cin>>arr[i];
+    }
+    cout<<"The current array you entered is"<<endl;
+    printer(n);
+    char ch = 'a';
+    while(ch != 'x' && ch != 'X'){
+    cout<<"Press 'I' to insert 'D' to delete 'S' to search"<<endl;
+    cout<<"[Insertions possible = "<<25-n<<" Deletions possible = "<<n<<"]"<<endl;
+    cin>>ch;
+    if((ch == 'I' || ch == 'i' )&& n < 25){
+        cout<<"At which index would you like to insert the element ? (0-based indexing)"<<endl;
+        cin>>temp;
+        int val;
+        cout<<"Which Integer value would you like to insert ?"<<endl;
+        cin>>val;
+        n++;
+        inserter(n,temp,val);
+    }else if((ch == 'D' || ch =='d') && n > 0){
+    cout<<"Which Index would you like to erase ? (1-based indexing) "<<endl;
+    cin>>temp;
+    temp--;
+    deleter(n,temp);
+    n--;
+    }else if(ch == 's' || ch == 'S'){
+        cout<<"So, with which integer would you like to multiply elements of array ?"<<endl;
+        cin>>temp;
+        triverser(temp,n);
+    }else{
+    cout<<"Invalid input"<<endl;
+    }
+    cout<<"Press X to end the program else press any key to continue"<<endl;
+    cin>>ch;
+        }
+    return 0;
+}
