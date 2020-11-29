@@ -1,0 +1,169 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+   int data;
+   struct Node* next;
+   struct Node* prev;
+};
+int size_of_list(struct Node* head){
+    if(head == NULL)
+        return 0;
+int counter = 1;
+while(head->next != NULL){
+    head = head->next;
+    counter++;
+}
+//if(counter == 1)
+  //  return 2;
+return counter;
+}
+
+struct Node* new_one(int new_data){
+struct Node* newnode = new Node;
+newnode->data = new_data;
+newnode->next = NULL;
+newnode->prev = NULL;
+return newnode;
+};
+
+void insert_at(struct Node** head , int new_data , int position){
+    struct Node* newnode = new_one(new_data);
+    if(position == 1){
+        if( (*head) != NULL){
+            (*head)->prev = newnode;
+            newnode->next = (*head);
+        }
+        (*head) = newnode;
+        return;
+    }
+    if( (*head) == NULL){
+      cout<<"Error 532 ! Position Out of Bounds! "<<endl;
+      delete newnode;
+        return;
+    }
+    int size_ = size_of_list( (*head) );
+    struct Node* pointer = *head;
+    if(size_ < position){
+    cout<<"Error 542 ! Position Out of Bounds! "<<endl;
+      delete newnode;
+    }else if(size_ == position){
+    while( pointer->next != NULL)
+        pointer = pointer->next;
+        pointer->next = newnode;
+        newnode->prev = pointer;
+    }else{
+    while(position-->1)
+     pointer = pointer->next;
+        newnode->next = pointer->next;
+        pointer->next->prev = newnode;
+        pointer->next = newnode;
+        newnode->prev = pointer;
+    }
+    return;
+}
+void delete_at(struct Node** head, int position){
+        if(*head == NULL){
+        cout<<"Error ! Position Out of Bounds!"<<endl;
+        return;
+    }
+        struct Node* pointer = *head;
+    if(position == 0){
+        (*head)->next->prev = NULL;
+        (*head) = (*head)->next;
+    }else{
+for(int i = 1 ; i< position ; i++){
+        if(pointer->next == NULL){
+            cout<<"Error ! Position Out of Bounds!"<<endl;
+            return;
+        }
+          pointer = pointer->next;
+            }
+     if(pointer->next == NULL){
+        pointer->prev->next = NULL;
+     }else{
+pointer->prev->next = pointer->next;
+pointer->next->prev = pointer->prev;
+     }
+    }
+delete pointer;
+return;
+}
+
+void display_front(struct Node* head){
+    cout<<"Front Print"<<endl;
+    cout<<"NULL <=> ";
+while(head != NULL){
+    cout<<head->data<<" <=> ";
+    head = head->next;
+}
+cout<<"NULL"<<endl;
+return;
+}
+void display_end(struct Node* head){
+    cout<<"End Print"<<endl;
+    cout<<"NULL <=> ";
+while(head -> next != NULL){
+    head = head->next;
+}
+while(head  != NULL){
+    cout<<head->data<<" <=> ";
+    head = head->prev;
+}
+cout<<"NULL"<<endl;
+return;
+}
+
+void print_functions(){
+   cout<<"Press [1] to insert at Head "<<endl<<"Press [2] to insert at Tail"<<endl;
+   cout<<"Press [3] to Delete at Head"<<endl<<"Press [4] to delete at Tail"<<endl;
+   cout<<"Press [5] to insert at a specific Position"<<endl<<"Press [6] to delete at a specific position"<<endl;
+   cout<<"Press [7] to Display from Head"<<endl<<"Press [8] to Display from Tail"<<endl;
+   cout<<"Press [9] to view the instructions Again"<<endl;
+   cout<<"Press [-1] to Terminate the Program"<<endl;
+}
+int main() {
+    cout<<"This is a Doubly Ended Linked List"<<endl;
+   struct Node* head = NULL;
+print_functions();
+int i ;
+cin>>i;
+while(i!=-1){
+        if(i==1){
+            cout<<"Enter value to be added"<<endl;
+            cin>>i;
+            insert_at(&head, i,1); //insert at front
+        }else if(i==2){
+        cout<<"Enter value to be added"<<endl;
+            cin>>i;
+            insert_at(&head, i,size_of_list(head)); // insert at end
+        }else if(i==3){
+    delete_at(&head,0); // delete at front
+        }else if(i==4){
+             delete_at(&head,size_of_list(head)); // delete at end
+        }else if(i==5){
+            cout<<"Enter value to be added"<<endl;
+            cin>>i;
+            cout<<"Enter Position where to add"<<endl;
+            int pos; cin>>pos;
+            insert_at(&head,i,pos+1);
+        }else if(i==6){
+            cout<<"Enter Position where to delete"<<endl;
+            cin>>i;
+            delete_at(&head,i);
+        }else if(i==7){
+            display_front(head);
+        }else if(i==8){
+            display_end(head);
+        }else if(i == 9){
+            print_functions();
+        }else{
+        cout<<"Invalid Input"<<endl<<"Review the Instruction"<<endl;
+                print_functions();
+        }
+        cin>>i;
+}
+cout<<"Program Terminated"<<endl;
+
+   return 0;
+}
