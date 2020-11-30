@@ -1,56 +1,39 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-
 struct Node {
    int data;
    struct Node* next;
    struct Node* prev;
 };
-
-void insert_front(struct Node** head, int new_data)
-{
+void insert_front(struct Node** head, int new_data){
    struct Node* newNode = new Node;
-
    newNode->data = new_data;
-
    newNode->next = (*head);
    newNode->prev = NULL;
-
    if ((*head) != NULL)
    (*head)->prev = newNode;
-
    (*head) = newNode;
 }
-void insert_end(struct Node** head, int new_data)
-{
+void insert_end(struct Node** head, int new_data){
    struct Node* newNode = new Node;
-
    struct Node* last = *head;
-
    newNode->data = new_data;
-
    newNode->next = NULL;
-
    if (*head == NULL) {
    newNode->prev = NULL;
    *head = newNode;
     return;
 }
-
 while (last->next != NULL)
 last = last->next;
-
 last->next = newNode;
-
 newNode->prev = last;
 return;
 }
-
 void delete_end(struct Node** head){
     Node* temp = *head;
-    while(temp->next != NULL ){
+    while(temp->next != NULL )
         temp = temp -> next;
-    }
     temp->prev->next = NULL;
     temp->prev = NULL;
     delete temp;
@@ -63,7 +46,6 @@ void delete_front(struct Node** head){
         (*head) = (*head)->next;
         delete temp;
 }
-
 void display_front(struct Node* head){
     cout<<"NULL <=> ";
 while(head != NULL){
@@ -89,7 +71,7 @@ void print_functions(){
    cout<<"Press [1] to insert at Head "<<endl<<"Press [2] to insert at Tail"<<endl;
    cout<<"Press [3] to Delete at Head"<<endl<<"Press [4] to delete at Tail"<<endl;
    cout<<"Press [5] to Display from Head"<<endl<<"Press [6] to Display from Tail"<<endl;
-   cout<<"Press [-1] to Terminate the Program"<<endl;
+   cout<<"Press [7] to Display Functions"<<endl<<"Press [-1] to Terminate the Program"<<endl;
 }
 int main() {
     cout<<"This is a Doubly Ended Linked List"<<endl;
@@ -100,8 +82,6 @@ cin>>i;
 while(i!=-1){
         if(i==1){
             cout<<"Enter value to be added"<<endl;
-        //    int temp;
-         //   cin>>temp;
             cin>>i;
             insert_front(&head, i);
         }else if(i==2){
@@ -116,31 +96,14 @@ while(i!=-1){
             display_front(head);
         }else if(i==6){
             display_end(head);
+        }else if(i==7){
+        print_functions();
         }else{
         cout<<"Invalid Input"<<endl;
+        cout<<"Press[7] to view instructions"<<endl;
         }
-        print_functions();
         cin>>i;
 }
 cout<<"Program Terminated"<<endl;
-
-/*
-insert_front(&head, 55);
-insert_front(&head, 35);
-insert_front(&head, 78);
-insert_front(&head, 105);
-       insert_end(&head, 77);
-insert_end(&head, 126);
-insert_end(&head, 5621);
-insert_end(&head, 237);
-
-    display_front(head);
-    display_end(head);
-    cout<<"##########################################"<<endl;
-    delete_front(&head);
-     delete_end(&head);
-    display_front(head);
-    display_end(head);
-*/
    return 0;
 }
