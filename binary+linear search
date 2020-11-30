@@ -21,9 +21,9 @@ int mid = (high-low)/2 + low;
 if(arr[mid] == item )
     return mid;
 if(arr[mid] > item)
-  return  binary(item,arr,mid-1,low);
+  return  binary(mid-1,arr,item,low);
 else
- return binary(item,arr,high,mid+1);
+ return binary(high,arr,item,mid+1);
     }
  return -1;
 }
