@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+using namespace std;
+class Node{
+	public:
+	int data;
+	Node *next;
+};
+int insert_at_head(Node** head, int data, int n){
+Node* new_node = new Node();
+new_node->data = data;
+if(n==0){
+    new_node->next = new_node;
+    (*head) = new_node;
+    return 1;
+}
+new_node->next = (*head);
+for(int i = 1 ; i< n ; i++)
+    (*head) = (*head)->next;
+(*head)->next = new_node;
+(*head) = new_node;
+return n+1;
+}
+int delete_at_end(Node** head,int n){
+    if(n==0){
+        cout<<"Error ! List Underflow! "<<endl;
+        return 0;
+    }
+    for(int i = 2;i<n;i++)
+        (*head) = (*head)->next;
+    Node* temp = (*head)->next;
+    (*head)->next = temp->next;
+    delete temp;
+    (*head) = (*head)->next;
+    return n-1;
+}
+void display(Node *node, int n){
+	for(int i = 0 ;i<n;i++){
+		cout<<node->data<<"-> ";
+		node = node->next;
+	}
+	cout<<"NULL"<<endl;
+}
+void functions(){
+    cout<<"Press [I] for insert at Front "<<endl<<"Press [D] for delete at End "<<endl;
+    cout<<"Press [P] to print the Linked List"<<endl<<"Press [X] to terminate the program"<<endl;
+}
+int main(){
+	Node* head = NULL;
+	char chara = 'l';
+	int val,n = 0;
+	functions();
+    cin>>chara;
+	while(chara != 'x' && chara != 'X'){
+	    if(chara == 'i' || chara == 'I'){
+            cout<<"Insert Value to be added"<<endl;
+            cin>>val;
+            n = insert_at_head(&head,val,n);
+            }else if(chara == 'd' || chara == 'D'){
+            n =   delete_at_end(&head,n);
+            }else if(chara == 'p' || chara == 'P'){
+                display(head,n);
+                }else{
+                cout<<"Invalid Output!"<<endl;
+                functions();
+                }
+        cin>>chara;
+	}
+cout<<"Program Terminated"<<endl;
+	return 0;
+}
