@@ -1,0 +1,304 @@
+#include "bits/stdc++.h"
+//#include "conio.h"
+using namespace std;
+typedef struct node{
+int data;
+node* left_child ;
+node* right_child;
+} node ;
+node* tree_builder(int new_data , node* root){
+    node* temp = new node();
+    temp->data = new_data;
+    temp->left_child = NULL;
+    temp->right_child = NULL;
+if(root == NULL){
+    root = temp;
+    return root;
+}
+if(root->data > new_data){
+  root->left_child = tree_builder(new_data,root->left_child);
+}else{
+  root->right_child = tree_builder(new_data,root->right_child);
+}
+return root;
+}
+void final_printer(node* root){
+if(root == NULL)
+    return;
+cout<<"root->data = "<<root->data<<" ";
+if(root->left_child != NULL){
+    cout<<"root->left_child = "<<root->left_child->data<<" ";
+}
+if(root->right_child != NULL){
+    cout<<"root->right_child = "<<root->right_child->data<<" ";
+}
+cout<<endl;
+if(root->left_child != NULL){
+   final_printer(root->left_child);
+}
+if(root->right_child != NULL){
+    final_printer(root->right_child);
+}
+}
+void print_inorder(node* root){
+        if(root == NULL)
+        return;
+if(root->left_child != NULL)
+    print_inorder(root->left_child);
+cout<<root->data<<" ";
+if(root->right_child != NULL)
+    print_inorder(root->right_child);
+return;
+}
+
+bool searcher(node* root, int info){
+if(root->data == info)
+    return true;
+if(root->data > info)
+    if(root->left_child == NULL)
+    return false;
+else
+    return searcher(root->left_child,info);
+else
+    if(root->right_child == NULL)
+    return false;
+else
+    return searcher(root->right_child,info);
+}
+void print_preorder(node* root){
+        if(root == NULL)
+        return;
+cout<<root->data<<" ";
+if(root->left_child != NULL)
+    print_preorder(root->left_child);
+if(root->right_child != NULL)
+    print_preorder(root->right_child);
+return;
+}
+void print_postorder(node* root){
+    if(root == NULL)
+        return;
+if(root->left_child != NULL)
+    print_postorder(root->left_child);
+if(root->right_child != NULL)
+    print_postorder(root->right_child);
+cout<<root->data<<" ";
+return;
+}
+node* minValueNode(struct node* node)
+{
+    struct node* current = node;
+
+    /* loop down to find the leftmost leaf */
+    while (current && current->left_child != NULL)
+        current = current->left_child;
+
+    return current;
+}
+
+/* Given a binary search tree and a key, this function
+deletes the key and returns the new root */
+node* deleteNode(struct node* root, int key)
+{
+    // base case
+    if (root == NULL)
+        return root;
+
+    // If the key to be deleted is
+    // smaller than the root's
+    // key, then it lies in left subtree
+    if (key < root->data)
+        root->left_child = deleteNode(root->left_child, key);
+
+    // If the key to be deleted is
+    // greater than the root's
+    // key, then it lies in right subtree
+    else if (key > root->data)
+        root->right_child = deleteNode(root->right_child, key);
+
+    // if key is same as root's key, then This is the node
+    // to be deleted
+    else {
+        // node with only one child or no child
+        if (root->left_child == NULL) {
+            struct node* temp = root->right_child;
+            free(root);
+            return temp;
+        }
+        else if (root->right_child == NULL) {
+            struct node* temp = root->left_child;
+            free(root);
+            return temp;
+        }
+
+        // node with two children: Get the inorder successor
+        // (smallest in the right subtree)
+        struct node* temp = minValueNode(root->right_child);
+
+        // Copy the inorder successor's content to this node
+        root->data = temp->data;
+
+        // Delete the inorder successor
+       root->right_child = deleteNode(root->right_child, temp->data);
+       //free(temp);
+    }
+    return root;
+}
+
+node* delete_it(node* root , int info){
+if(root == NULL)
+    return root;
+if(root->data > info)
+    root->left_child = delete_it(root->left_child,info);
+else if(root->data < info)
+    root->right_child = delete_it(root->right_child,info);
+else{
+        node* temp = NULL;
+    if(root->left_child != NULL && root->right_child == NULL)
+       temp = root->left_child;
+    else if(root->left_child == NULL && root->right_child!= NULL)
+    temp = root->right_child;
+    else if(root->left_child != NULL && root->right_child != NULL){
+    temp = root->right_child;
+    while(temp->left_child != NULL)
+    temp = temp->left_child;
+    root->data = temp->data;
+        if(temp->right_child!=NULL){
+            temp = // to be fixed
+        }
+    }
+        free(root);
+    return temp;
+    
+    
+    
+}
+
+}
+
+int main(){
+    node* root = NULL;
+    int n;
+    cout<<"Enter the total size of tree"<<endl;
+    cin>>n;
+    cout<<"The Tree of Size "<<n<<" has following elements"<<endl;
+    srand(time(0));
+    while(n-->0){
+        int val = rand()%50;
+        cout<<val<<" ";
+        root = tree_builder(val,root);
+    }
+if(root == NULL){
+    cout<<"Fail"<<endl;
+    return 0;
+}
+cout<<endl<<"In-order Traversal"<<endl;
+print_inorder(root);
+cout<<endl<<"Pre-order Traversal"<<endl;
+print_preorder(root);
+cout<<endl<<"Post-order Traversal"<<endl;
+print_postorder(root);
+//deleter(&root,root->data);
+//deleter(&root,55);
+/*
+root = deleteNode(root,root->data);
+root = deleteNode(root,55);
+cout<<endl<<"In-order Traversal"<<endl;
+print_inorder(root);
+cout<<endl<<"Pre-order Traversal"<<endl;
+print_preorder(root);
+cout<<endl<<"Post-order Traversal"<<endl;
+print_postorder(root);*/
+deleter(&root,root->data);
+cout<<endl<<"In-order Traversal"<<endl;
+print_inorder(root);
+cout<<endl<<"Pre-order Traversal"<<endl;
+print_preorder(root);
+cout<<endl<<"Post-order Traversal"<<endl;
+print_postorder(root);
+deleter(&root,root->left_child->data);
+cout<<endl<<"In-order Traversal"<<endl;
+print_inorder(root);
+cout<<endl<<"Pre-order Traversal"<<endl;
+print_preorder(root);
+cout<<endl<<"Post-order Traversal"<<endl;
+print_postorder(root);
+
+    return 0;
+}
+/*
+void deleter(node** root , int info){
+    if(!searcher((*root),info)){
+        cout<<"Item not there"<<endl;
+        return;
+    }
+if( (*root)->data < info){
+        (*root) = (*root)->right_child;
+deleter(root,info);
+}else if((*root)->data > info){
+    (*root) = (*root)->left_child;
+deleter(root,info);
+}else{
+unsigned short int childs = 0;
+if((*root)->left_child != NULL)
+    childs++;
+if((*root)->right_child != NULL)
+    childs++;
+if(childs == 0){
+    free(root);
+    root = NULL;
+return;
+}else if(childs == 1){
+node* temp = (*root) ;
+if((*root)->left_child != NULL)
+    (*root) = (*root)->left_child;
+else
+(*root) = (*root)->right_child;
+free(temp);
+return;
+}else{
+node** temp = root ;
+while( (*temp)->left_child != NULL)
+    *temp = (*temp)->left_child;
+
+(*root)->data = (*temp)->data;
+
+if((*temp)->right_child != NULL){
+node*temp2 = (*temp);
+(*temp) = (*temp)->right_child;
+free(temp2);
+//(*root) = (*root)->right_child;
+//deleter(root,temp->data);
+/*
+while((*root)->left_child != NULL)
+    (*root) = (*root)->left_child;
+temp = (*root)->right_child;
+free((*root));
+(*root) = temp;
+*/
+/*
+// (*root)->right_child;
+//free(temp);
+
+
+    //    node* temp2 = temp;
+     //   temp = temp->right_child;
+     //   free(temp);
+
+  //  (*root) = (*root)->right_child;
+//deleter(root,temp->data);
+
+node* temp2 = temp->right_child;
+temp->data = temp2->data;
+temp->left_child = temp2->left_child;
+temp->right_child = temp2->right_child;
+free(temp2);
+*//*
+}else
+free(temp);
+return ;
+}
+}
+}
+*/
+
